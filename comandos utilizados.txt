@@ -1,0 +1,32 @@
+TYPEORM
+    npm i @nestjs/typeorm @nestjs/config pg
+    adicionar no importa do app.module.ts
+    ConfigModule.forRoot({isGlobal: true})
+
+VALIDADOR DE ENTIDADES
+    npm i class-validator class-transformer
+
+    É preciso adicionar a instrução abaixo no arquivo main.ts
+    app.useGlobalPipes(new ValidationPipe());
+
+    exemplo de uso
+    import { IsNotEmpty } from "class-validator";
+
+    export class CreateClienteBody {
+        @IsNotEmpty({message: "Id esta Vazio"})
+        id: string;
+        @IsNotEmpty({message: "Nome esta Vazio"})
+        name: string;
+        telefone: string;
+    }
+
+AUTENTICACAO E AUTORIZACAO DE USUARIO 
+    //rodar os dois comandos abaixo
+    npm i bcrypt                    //para aplicacao
+    npm i bcrypt -D @types/bcrypt   //para desenvolvimento
+    npm i @nestjs/jwt
+    nest g guard auth
+    
+COMANDO PARA GERAR UUID
+    npm i uuid @types/uuid
+
