@@ -2,30 +2,20 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClienteModule } from './entities/cliente/cliente.module';
-import { UsersModule } from './entities/users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { DbModule } from './db/db.module';
+// import { ClienteModule } from './db/entities/cliente/cliente.module';
+import { UsersModule } from './db/entities/users/users.module';
 
 @Module({
   imports: [
-    
-    ConfigModule.forRoot({isGlobal: true}),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      autoLoadEntities: true,
-      synchronize: true,
-      entities: ['dist/**/*.entity{.ts,.js}'],
-    }),
-    ClienteModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    // ClienteModule,
     UsersModule,
-    AuthModule
+    AuthModule,
+    DbModule
   ],
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

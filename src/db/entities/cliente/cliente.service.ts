@@ -19,7 +19,7 @@ export class ClienteService {
     }
 
     findById(id: string): Cliente[] | PromiseLike<Cliente[]> {
-        const found = this.clienteRepository.find({ where: {id: id}});
+        const found = this.clienteRepository.find({ where: {id: id}}).then((found) => found);
         if(found){
             return found[0];
         }

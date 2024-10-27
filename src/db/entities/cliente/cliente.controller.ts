@@ -5,7 +5,7 @@ import { CreateClienteDto } from './dto/create.cliente.dto';
 import { UpdateClienteDto } from './dto/update.cliente.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('cliente')
 export class ClienteController {
 

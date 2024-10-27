@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthReponseDto } from './auth.response.dto';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from 'src/entities/users/users.service';
 import { compareSync as bcryptCompareSync } from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
+import { UsersService } from 'src/db/entities/users/users.service';
 
 @Injectable()
 export class AuthService {
@@ -17,11 +17,12 @@ export class AuthService {
         this.jwtExpirateTimeInSeconds = +this.configService.get<string>('JWT_EXPIRES_IN');
     }
 
-    authenticate(username: string, password: string): AuthReponseDto {
-        const foundUser = this.usersService.findByUsername(username);
-
+    async authenticate(username: string, password: string): Promise<AuthReponseDto> {
+        const users = await this.usersService.findByUsername(username);
+        const foundUser = users[0];
+        
         if (!foundUser || !bcryptCompareSync(password, foundUser.password)) {
-            new UnauthorizedException();
+            throw new UnauthorizedException();
         }
 
         const payload = { sub: foundUser.id, username: foundUser.username };
